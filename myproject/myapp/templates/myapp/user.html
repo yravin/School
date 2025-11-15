@@ -1,0 +1,380 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduManage - ការភ្ជាប់ទៅកាន់ Django Backend</title>
+    <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Battambang', 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .login-header {
+            background: linear-gradient(to right, #1a237e, #303f9f);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .login-header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        
+        .login-header p {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .login-form {
+            padding: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #1a237e;
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+        }
+        
+        .input-with-icon input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .input-with-icon input:focus {
+            border-color: #667eea;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+        
+        .btn-login {
+            background: linear-gradient(to right, #1a237e, #303f9f);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 10px;
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 35, 126, 0.4);
+        }
+        
+        .btn-login:active {
+            transform: translateY(0);
+        }
+        
+        .response-area {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+        }
+        
+        .success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+        
+        .error {
+            background-color: #ffebee;
+            color: #d32f2f;
+            border: 1px solid #ffcdd2;
+        }
+        
+        .additional-options {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        
+        .additional-options a {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .additional-options a:hover {
+            color: #1a237e;
+            text-decoration: underline;
+        }
+        
+        .language-selector {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+        
+        .language-selector select {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #777;
+        }
+        
+        @media (max-width: 480px) {
+            .login-container {
+                border-radius: 10px;
+            }
+            
+            .login-header {
+                padding: 20px;
+            }
+            
+            .login-header h1 {
+                font-size: 24px;
+            }
+            
+            .login-form {
+                padding: 20px;
+            }
+        }
+        
+        .loader {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .fas fa-eye{
+           margin-left: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>Adminuser</h1>
+            <p>ចូលប្រើប្រាស់ប្រព័ន្ធគ្រប់គ្រង</p>
+        </div>
+        
+        <form id="loginForm" class="login-form">
+            <div class="form-group">
+                <label for="username">ឈ្មោះអ្នកប្រើ</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" name="username" required placeholder="បញ្ចូលឈ្មោះអ្នកប្រើ">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">ពាក្យសម្ងាត់</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" name="password" required placeholder="បញ្ចូលពាក្យសម្ងាត់">
+                    <span class="password-toggle" id="passwordToggle">
+                    <i class="fas fa-eye"></i>
+                    </span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">អាស័យដ្ឋានអ៊ីមែល</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" name="email" required placeholder="បញ្ចូលអាស័យដ្ឋានអ៊ីមែល">
+                </div>
+            </div>
+            
+            <button type="submit" class="btn-login">
+                <span id="buttonText">ចូលប្រើ</span>
+                <div class="loader" id="loader"></div>
+            </button>
+            
+           
+        </form>
+        
+        <div class="response-area" id="responseMessage"></div>
+        
+        <div class="language-selector">
+            <select id="languageSelect">
+                <option value="km">ភាសាខ្មែរ</option>
+                <option value="en">English</option>
+            </select>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const email = document.getElementById('email').value;
+            const responseMessage = document.getElementById('responseMessage');
+            const buttonText = document.getElementById('buttonText');
+            const loader = document.getElementById('loader');
+            
+            // Show loading state
+            buttonText.style.display = 'none';
+            loader.style.display = 'block';
+            responseMessage.style.display = 'none';
+            
+            try {
+                // Send data to Django backend
+                const response = await fetch('http://127.0.0.1:8000/admin-api/login/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password,
+                        email: email
+                    })
+                });
+                
+                const data = await response.json();
+                
+                // Hide loading state
+                buttonText.style.display = 'block';
+                loader.style.display = 'none';
+                responseMessage.style.display = 'block';
+                
+                if (response.ok) {
+                    responseMessage.innerHTML = `<i class="fas fa-check-circle"></i> ${data.message || 'ចូលប្រើប្រាស់ជោគជ័យ!'}`;
+                    responseMessage.className = 'response-area success';
+                    
+                    // Store authentication status
+                    localStorage.setItem('isLoggedIn', 'true');
+                    
+                    // Redirect after successful login
+                    setTimeout(() => {
+                        window.location.href = 'http://127.0.0.1:8000/adminSythem/';
+                    }, 1500);
+                } else {
+                    responseMessage.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${data.message || 'ឈ្មោះអ្នកប្រើ ពាក្យសម្ងាត់ ឬអ៊ីមែលមិនត្រឹមត្រូវ'}`;
+                    responseMessage.className = 'response-area error';
+                }
+            } catch (error) {
+                // Hide loading state
+                buttonText.style.display = 'block';
+                loader.style.display = 'none';
+                responseMessage.style.display = 'block';
+                
+                responseMessage.innerHTML = `<i class="fas fa-exclamation-triangle"></i> មានបញ្ហាក្នុងការភ្ជាប់ទៅកាន់សេវាកម្ម: ${error.message}`;
+                responseMessage.className = 'response-area error';
+            }
+        });
+        
+        // Toggle password visibility
+        document.getElementById('passwordToggle').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+        
+        // Function to get CSRF token from cookie
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        
+        // Language selector functionality
+        document.getElementById('languageSelect').addEventListener('change', function() {
+            // In a real application, this would change the UI language
+            alert('ភាសាត្រូវបានផ្លាស់ប្តូរទៅ: ' + this.options[this.selectedIndex].text);
+        });
+    </script>
+</body>
+</html>

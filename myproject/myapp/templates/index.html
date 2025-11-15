@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduManage - School Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'Css/style.css' %}">
+   
+</head>
+<body>
+   {% include 'base.html' %}
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="user-info">
+                    <img src="https://ui-avatars.com/api/?name=Admin+User&background=random" alt="User">
+                    <div>
+                        <h4>Admin User</h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content">
+                <div class="dashboard-cards">
+                    <div class="card students">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                        </div>
+                        <h3>{{students}}នាក់</h3>
+                        <p>សិស្សសរុប</p>
+                    </div>
+                    <div class="card teachers">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                            </div>
+                        </div>
+                        <h3>{{teachers}}នាក់</h3>
+                        <p>ចំនួនគ្រូបង្រៀនសរុប</p>
+                    </div>
+                    <div class="card classes">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                        </div>
+                        <h3>{{classes}}ថ្នាក់</h3>
+                        <p>ចំនួនថ្នាក់រៀនសរុប</p>
+                    </div>
+                    <div class="card attendance">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                        </div>
+                        <h3>100%</h3>
+                        <p>ចំនួនវត្តមានសិស្សប្រចាំថ្ងៃ</p>
+                    </div>
+                </div>
+
+                {% block content %}
+
+                {% endblock  %}
+
+                    
+       <script src="{% static 'js/main.js' %}"></script>
+
+               
+
+</body>
+</html>

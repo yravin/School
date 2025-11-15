@@ -1,0 +1,190 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>កម្មវិធីគ្រប់គ្រងពិន្ទុសិស្ស</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Khmer OS', 'Moul', sans-serif;
+        }
+
+        body {
+            background-color: #f0f8ff;
+            padding: 20px;
+            width: 90%;
+        }
+
+        .container {
+            max-width: 2000px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-left: 100px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #3366cc;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .class-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .class-btn {
+            padding: 12px 25px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        .class-btn:hover {
+            background-color: blue;
+        }
+
+        .class-btn.active {
+            background-color: blue;
+            font-weight: bold;
+        }
+
+        .score-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .score-table.active {
+            display: table;
+        }
+
+        .score-table th, .score-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .score-table th {
+            background-color: #3366cc;
+            color: white;
+            font-weight: bold;
+        }
+
+        .score-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .score-table tr:hover {
+            background-color: #e6f7ff;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            color: #888;
+        }
+
+        h2 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>កម្មវិធីគ្រប់គ្រងពិន្ទុសិស្ស</h1>
+
+        <!-- បង្ហាញឈ្មោះសិស្សទាំងអស់ -->
+       
+       
+
+        <div class="class-buttons">
+            <button class="class-btn active" data-class="12A">ថ្នាក់ 12A</button>
+            <button class="class-btn" data-class="12B">ថ្នាក់ 12B</button>
+            <button class="class-btn" data-class="12C">ថ្នាក់ 12C</button>
+        </div>
+
+        <table id="table-12A" class="score-table active">
+            <thead>
+                <tr>
+                    <th>ល.រ</th>
+                    <th>ឈ្មោះសិស្ស</th>
+                    <th>ភាសាខ្មែរ</th>
+                    <th>គណិត</th>
+                    <th>រូបវិទ្យា</th>
+                    <th>គីមី</th>
+                    <th>អង់គ្លេស</th>
+                    <th>សីលធម៌</th>
+                    <th>Python</th>
+                    <th>AI</th>
+                    <th>Computer</th>
+                    <th>ពិន្ទុសរុប</th>
+                    <th>មធ្យមភាគ</th>
+                    <th>និន្ទេស</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in student_score %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ s.student.name }}</td>
+                    <td>{{ s.Khmer }}</td>
+                    <td>{{ s.Math }}</td>
+                    <td>{{ s.Physics }}</td>
+                    <td>{{ s.chmisty }}</td>
+                    <td>{{ s.English }}</td>
+                    <td>{{ s.Morality }}</td>
+                    <td>{{ s.python }}</td>
+                    <td>{{ s.AI }}</td>
+                    <td>{{ s.Computer }}</td>
+                    <td>{{ s.total_score }}</td>
+                    <td>{{ s.average_score }}</td>
+                    <td>{{ s.grade }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="14" class="no-data">មិនមានទិន្នន័យ</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const classButtons = document.querySelectorAll('.class-btn');
+            classButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const selectedClass = this.getAttribute('data-class');
+                    classButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    document.querySelectorAll('.score-table').forEach(table => {
+                        table.classList.remove('active');
+                    });
+                    const table = document.getElementById(`table-${selectedClass}`);
+                    if (table) {
+                        table.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

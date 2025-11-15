@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} តារាងវាយតម្លៃថ្នាក់រៀនល្អ {% endblock %}
+
+{% block content %}
+<style>
+    .content-section{
+        margin: 0 auto;
+        width: 80%;
+    }
+    th{
+        margin-right: 250px;
+    }
+</style>
+
+<div class="content-section">
+    <div class="section-header">
+        <h2>តារាងវាយតម្លៃថ្នាក់រៀនល្អ</h2>
+        <button class="btn btn-primary">View All</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ចំណាត់ថ្នាក់ ថ្នាក់រៀនល្អ</th>
+                <th>ឈ្មោះគ្រូទទួលបន្ទុកថ្នាក់</th>
+                <th >ថ្នាក់ទី</th>
+                <th>ចំនួនសិស្ស</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cls in Topclass %}
+<tr>
+    <td>ចំណាត់ថ្នាក់លេខ{{ cls.Class_id }}</td>
+    <td>{{cls.Teacher_name}}</td> 
+    <td>{{ cls.name_class }}</td>
+    <td>{{ cls.student_cunte }}នាក់</td>
+
+   
+    <td><span class="badge badge-primary"></span></td>
+</tr>
+{% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

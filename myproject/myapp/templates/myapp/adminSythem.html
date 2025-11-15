@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Admin System{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f4f7fc;
+    }
+    .content-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin: 20px auto;
+        width: 90%;
+    }
+    h2 {
+        color: #333;
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+    form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    form input, form select {
+        width: 100%;
+        padding: 8px 12px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 0.9rem;
+    }
+    button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 16px;
+        margin-top: 8px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    table th, table td {
+        padding: 12px 15px;
+        text-align: left;
+    }
+    table thead {
+        background-color: #007bff;
+        color: white;
+        font-weight: 600;
+    }
+    table tbody tr:nth-child(even) {
+        background-color: #f1f3f8;
+    }
+    .btn-danger {
+        background-color: #dc3545;
+    }
+    .btn-danger:hover {
+        background-color: #b02a37;
+    }
+    img{
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+<div class="content-section">
+     
+    <!-- Teacher Form -->
+    <div>
+        <h2>បញ្ចូលគ្រូថ្មី</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ teacher_form.as_p }}
+            <button type="submit" name="action" value="save_teacher">Save Teacher</button>
+        </form>
+    </div>
+
+    <!-- Schedule Form -->
+    <div>
+        <h2>បញ្ចូលកាលវិភាគថ្មី</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ schedule_form.as_p }}
+            <button type="submit" name="action" value="save_schedule">Save Schedule</button>
+        </form>
+    </div>
+</div>
+
+<hr style="margin: 40px 0;">
+
+
+<!-- Teacher Table -->
+<div class="content-section" style="grid-template-columns: 1fr;">
+    <h1>Adminsystem</h1>
+    <table>
+        <img src="https://media.istockphoto.com/id/1353529551/vector/flat-vector-business-people-working-online-at-home-office-on-web-monitor-dashboard-with.jpg?s=612x612&w=0&k=20&c=N-w6BYUKeKPUfOwLcAZlP4i5iYZZ2-EEuGwBeZd1qx8=" alt="">
+        </thead>
+        <tbody>
+        {% for teacher in teachers %}
+            <tr>
+               
+                <td>
+                    <form method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="teacher_id" value="{{ teacher.id }}">
+                        <button type="submit" name="action" value="delete_teacher" class="btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

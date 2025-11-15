@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'Css/style.css' %}">
+   
+</head>
+<body>
+
+     <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-graduation-cap fa-2x"></i>
+                <h2>EduManage</h2>
+            </div>
+            <div class="menu">
+                <div class="menu-item active">
+                    <i class="fas fa-home"></i>
+                   <a href="{% url 'home' %}"><span>ទំព័រដេីម</span></a>  
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-user-graduate"></i>
+                    <a href="{% url 'student' %}"><span>ព័ត៏មានសិស្ស</span></a>
+
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <a href="{% url 'teacher_list'%}"><span>ចំនួនគ្រួបង្រៀន</span></a>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-book"></i>
+                    <a href="{% url 'classgood' %}"><span>ថ្នាក់រៀនគំរូ</span></a>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <a href=" {% url 'schedule' %} "><span>កាលវិភាគ</span></a>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-chart-bar"></i>
+                   <a href="{% url 'score' %}"> <span>ពិន្ទុសិស្ស</span></a>
+                 </div>   
+               
+                 <div class="menu-item">
+                    <i class="far fa-address-card"></i>
+                    <a href=" {% url 'User' %} "><span>admin</span></a>
+
+                </div>
+            </div>
+        </div>
+        
+        {% block content %}
+            
+        {% endblock  %}
+            
+
+</body>
+</html>

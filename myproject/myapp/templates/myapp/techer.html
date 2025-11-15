@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}ចំនួនគ្រូបង្រៀន{% endblock %}
+
+{% block content %}
+<style>
+    .content-section{
+        margin: 0 auto;
+        width: 80%;
+    }
+    table th, table td {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    .btn {
+        padding: 5px 10px;
+        margin: 2px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .btn-primary { background-color: #007bff; color: white; }
+    .btn-danger { background-color: #dc3545; color: white; }
+</style>
+
+<div class="content-section">
+   
+    </form>
+
+    <hr>
+
+    <h2>បញ្ជីគ្រូបង្រៀន</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>លេខសម្គាល់</th>
+                <th>ឈ្មោះគ្រូបង្រៀន</th>
+                <th>មុខវិជ្ជា</th>
+                <th>ចំនួនថ្នាក់ត្រូវបង្រៀន</th>
+                <th>សកម្មភាព</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for teacher in teachers %}
+            <tr>
+                <td>{{ teacher.id }}</td>
+                <td>{{ teacher.name }}</td>
+                <td>{{ teacher.subject }}</td>
+                <td>{{ teacher.classes }}</td>
+                <td>
+                    <form method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="teacher_id" value="{{ teacher.id }}">
+                        <button type="submit" name="action" value="delete_teacher" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

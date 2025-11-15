@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+ចំនួនគ្រូបង្រៀន
+{% endblock %}
+
+{% block content %}
+<style>
+    .content-section{
+        margin: 0 auto;
+        width: 80%;
+    }
+</style>
+
+<div class="content-section">
+    <div class="section-header">
+        <h2>បញ្ចីរក្សាទុកព័ត៏មានរបស់សិស្ស</h2>
+        <button class="btn btn-primary">View All</button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>លេខសម្គាល់</th>
+                <th>ឈ្មោះសិស្ស</th>
+                <th>ថ្នាក់ទី</th>
+                <th>ជំនាញ</th>
+            </tr>
+        </thead>
+      <tbody>
+    {% for i in students %}
+    <tr>
+        <td>{{ i.id }}</td>
+        <td>{{ i.name }}</td>
+        <td>{{ i.grade}}</td>
+        <td>{{ i.student_majar }}</td>
+    </tr>
+    {% endfor %}
+</tbody>
+
+    </table>
+</div>
+{% endblock %}
